@@ -1,45 +1,135 @@
-import type { Route } from "../../+types/products";
+import { DateTime } from "luxon";
+import type { Route } from "./+types/yearly-leaderboard-page";
+import { data, isRouteErrorResponse, Link } from "react-router";
+import { z } from "zod";
+import { Hero } from "~/common/components/hero";
+import { ProductCard } from "../components/product-card";
+import { Button } from "~/common/components/ui/button";
+import ProductPagination from "~/common/components/product-pagination";
 
-export function loader({ request, params }: Route.LoaderArgs) {
-  const { year } = params;
-  return {
-    year,
-    leaderboard: [],
-  };
-}
+const paramsSchema = z.object({
+  year: z.coerce.number(),
+});
 
-export function action({ request }: Route.ActionArgs) {
-  return {};
-}
-
-export function meta(): Route.MetaFunction {
+export const meta: Route.MetaFunction = ({ params }) => {
+  const date = DateTime.fromObject({
+    year: Number(params.year),
+  })
+    .setZone("Asia/Seoul")
+    .setLocale("ko");
   return [
-    { title: "Yearly Leaderboard - WeMake" },
-    { name: "description", content: "Top products of the year" },
+    {
+      title: `Best of ${date.toLocaleString({
+        year: "numeric",
+      })} | wemake`,
+    },
   ];
-}
+};
 
-export default function YearlyLeaderboardPage({ loaderData, actionData }: Route.ComponentProps) {
+export const loader = ({ params }: Route.LoaderArgs) => {
+  const { success, data: parsedData } = paramsSchema.safeParse(params);
+  if (!success) {
+    throw data(
+      {
+        error_code: "invalid_params",
+        message: "Invalid params",
+      },
+      { status: 400 }
+    );
+  }
+  const date = DateTime.fromObject({
+    year: parsedData.year,
+  }).setZone("Asia/Seoul");
+  if (!date.isValid) {
+    throw data(
+      {
+        error_code: "invalid_date",
+        message: "Invalid date",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
+  const today = DateTime.now().setZone("Asia/Seoul").startOf("year");
+  if (date > today) {
+    throw data(
+      {
+        error_code: "future_date",
+        message: "Future date",
+      },
+      { status: 400 }
+    );
+  }
+  return {
+    ...parsedData,
+  };
+};
+
+export default function YearlyLeaderboardPage({
+  loaderData,
+}: Route.ComponentProps) {
+  const urlDate = DateTime.fromObject({
+    year: loaderData.year,
+  });
+  const previousYear = urlDate.minus({ years: 1 });
+  const nextYear = urlDate.plus({ years: 1 });
+  const isToday = urlDate.equals(DateTime.now().startOf("year"));
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Top Products of {loaderData.year}</h1>
-      <div className="space-y-4">
-        {loaderData.leaderboard.length === 0 ? (
-          <p className="text-gray-500 text-center py-8">
-            No products found for {loaderData.year}.
-          </p>
-        ) : (
-          loaderData.leaderboard.map((product: any, index: number) => (
-            <div key={product.id} className="bg-white rounded-lg shadow-md p-6 flex items-center">
-              <div className="text-2xl font-bold text-gray-400 w-12">#{index + 1}</div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                <p className="text-gray-600">{product.description}</p>
-              </div>
-            </div>
-          ))
-        )}
+    <div className="space-y-10">
+      <Hero
+        title={`Best of ${urlDate.toLocaleString({
+          year: "numeric",
+        })}`}
+      />
+      <div className="flex items-center justify-center gap-2">
+        <Button variant="secondary" asChild>
+          <Link to={`/products/leaderboards/yearly/${previousYear.year}`}>
+            &larr;{" "}
+            {previousYear.toLocaleString({
+              year: "numeric",
+            })}
+          </Link>
+        </Button>
+        {!isToday ? (
+          <Button variant="secondary" asChild>
+            <Link to={`/products/leaderboards/yearly/${nextYear.year}`}>
+              {nextYear.toLocaleString({
+                year: "numeric",
+              })}{" "}
+              &rarr;
+            </Link>
+          </Button>
+        ) : null}
       </div>
+      <div className="space-y-5 w-full max-w-screen-md mx-auto">
+        {Array.from({ length: 11 }).map((_, index) => (
+          <ProductCard
+            key={`productId-${index}`}
+            id={`productId-${index}`}
+            name="Product Name"
+            description="Product Description"
+            commentsCount={12}
+            viewsCount={12}
+            votesCount={120}
+          />
+        ))}
+      </div>
+      <ProductPagination totalPages={10} />
     </div>
   );
-} 
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  if (isRouteErrorResponse(error)) {
+    return (
+      <div>
+        {error.data.message} / {error.data.error_code}
+      </div>
+    );
+  }
+  if (error instanceof Error) {
+    return <div>{error.message}</div>;
+  }
+  return <div>Unknown error</div>;
+}

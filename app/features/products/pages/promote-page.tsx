@@ -1,30 +1,79 @@
-import type { Route } from "../../+types/products";
+import { Hero } from "~/common/components/hero";
+import type { Route } from "./+types/promote-page";
+import { Form } from "react-router";
+import { Select } from "~/common/components/ui/select";
+import SelectPair from "~/common/components/select-pair";
+import { Calendar } from "~/common/components/ui/calendar";
+import { useState } from "react";
+import { Label } from "~/common/components/ui/label";
+import type { DateRange } from "react-day-picker";
+import { DateTime } from "luxon";
+import { Button } from "~/common/components/ui/button";
 
-export function loader({ request }: Route.LoaderArgs) {
-  return {};
-}
-
-export function action({ request }: Route.ActionArgs) {
-  return {};
-}
-
-export function meta(): Route.MetaFunction {
+export const meta: Route.MetaFunction = () => {
   return [
-    { title: "Promote Product - WeMake" },
+    { title: "Promote Product | ProductHunt Clone" },
     { name: "description", content: "Promote your product" },
   ];
-}
+};
 
-export default function PromotePage({ loaderData, actionData }: Route.ComponentProps) {
+export default function PromotePage() {
+  const [promotionPeriod, setPromotionPeriod] = useState<
+    DateRange | undefined
+  >();
+  const totalDays =
+    promotionPeriod?.from && promotionPeriod.to
+      ? DateTime.fromJSDate(promotionPeriod.to).diff(
+          DateTime.fromJSDate(promotionPeriod.from),
+          "days"
+        ).days
+      : 0;
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Promote Your Product</h1>
-      <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
-        <p className="mb-4">Promote your product to reach more makers and users!</p>
-        <button className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
-          Promote Now
-        </button>
-      </div>
+    <div>
+      <Hero
+        title="Promote Your Product"
+        subtitle="Boost your product's visibility."
+      />
+      <Form className="max-w-sm mx-auto flex flex-col gap-10 items-center">
+        <SelectPair
+          label="Select a product"
+          description="Select the product you want to promote."
+          name="product"
+          placeholder="Select a product"
+          options={[
+            {
+              label: "AI Dark Mode Maker",
+              value: "ai-dark-mode-maker",
+            },
+            {
+              label: "AI Dark Mode Maker",
+              value: "ai-dark-mode-maker-1",
+            },
+            {
+              label: "AI Dark Mode Maker",
+              value: "ai-dark-mode-maker-2",
+            },
+          ]}
+        />
+        <div className="flex flex-col gap-2 items-center w-full">
+          <Label className="flex flex-col gap-1">
+            Select a range of dates for promotion{" "}
+            <small className="text-muted-foreground text-center ">
+              Minimum duration is 3 days.
+            </small>
+          </Label>
+          <Calendar
+            mode="range"
+            selected={promotionPeriod}
+            onSelect={setPromotionPeriod}
+            min={3}
+            disabled={{ before: new Date() }}
+          />
+        </div>
+        <Button disabled={totalDays === 0}>
+          Go to checkout (${totalDays * 20})
+        </Button>
+      </Form>
     </div>
   );
-} 
+}
