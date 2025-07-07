@@ -15,7 +15,7 @@ export const meta: MetaFunction = () => {
 
 export default function HomePage() {
   return (
-    <div className="px-20 space-y-40">
+    <div className="space-y-40">
       <div className="grid grid-cols-3 gap-4">
         <div>
           <h2 className="text-5xl font-bold leading-tight tracking-tight">
@@ -55,7 +55,7 @@ export default function HomePage() {
         {Array.from({ length: 11 }).map((_, index) => (
           <PostCard
             key={`postId-${index}`}
-            id={`postId-${index}`}
+            id={index}
             title="What is the best productivity tool?"
             author="Nico"
             authorAvatarUrl="https://github.com/apple.png"
@@ -124,7 +124,9 @@ export default function HomePage() {
             Join a team looking for a new member.
           </p>
           <Button variant="link" asChild className="text-lg p-0">
-            <Link to="/teams">Explore all teams &rarr;</Link>
+            <Link prefetch="viewport" to="/teams">
+              Explore all teams &rarr;
+            </Link>
           </Button>
         </div>
         {Array.from({ length: 7 }).map((_, index) => (
