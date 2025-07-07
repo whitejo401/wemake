@@ -1,8 +1,8 @@
 -- Seed data for WeMake application
--- Profile ID to use: 1b44c9d2-060f-4121-ae4b-d78475fcb0e6
+-- Profile ID to use: 8354a3c8-d310-4dcf-8b2a-b2124904b441
 
 -- First, ensure the profile exists (profiles table is excluded from seeding, but we need the user)
-INSERT INTO "users" ("id") VALUES ('1b44c9d2-060f-4121-ae4b-d78475fcb0e6')
+INSERT INTO "users" ("id") VALUES ('8354a3c8-d310-4dcf-8b2a-b2124904b441')
 ON CONFLICT ("id") DO NOTHING;
 
 -- 1. Topics (independent table)
@@ -23,15 +23,15 @@ INSERT INTO "categories" ("name", "description") VALUES
 
 -- 3. Posts (depends on topics)
 INSERT INTO "posts" ("title", "content", "topic_id", "profile_id") VALUES
-('How to Build a Successful SaaS Product', 'Building a SaaS product requires careful planning and execution. Here are some key steps...', 1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6'),
-('The Future of Remote Work', 'Remote work is here to stay. Companies need to adapt their processes...', 2, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6'),
-('Latest Trends in AI Development', 'Artificial Intelligence is rapidly evolving. Here are the latest trends...', 3, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6'),
-('Career Growth in Tech', 'Advancing your career in technology requires continuous learning...', 4, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6'),
-('Design Principles for Better UX', 'Good design is crucial for user experience. Here are some principles...', 5, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+('How to Build a Successful SaaS Product', 'Building a SaaS product requires careful planning and execution. Here are some key steps...', 1, '8354a3c8-d310-4dcf-8b2a-b2124904b441'),
+('The Future of Remote Work', 'Remote work is here to stay. Companies need to adapt their processes...', 2, '8354a3c8-d310-4dcf-8b2a-b2124904b441'),
+('Latest Trends in AI Development', 'Artificial Intelligence is rapidly evolving. Here are the latest trends...', 3, '8354a3c8-d310-4dcf-8b2a-b2124904b441'),
+('Career Growth in Tech', 'Advancing your career in technology requires continuous learning...', 4, '8354a3c8-d310-4dcf-8b2a-b2124904b441'),
+('Design Principles for Better UX', 'Good design is crucial for user experience. Here are some principles...', 5, '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
 -- 4. GPT Ideas (independent table)
 INSERT INTO "gpt_ideas" ("idea", "views", "claimed_by") VALUES
-('AI-powered personal finance manager', 150, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6'),
+('AI-powered personal finance manager', 150, '8354a3c8-d310-4dcf-8b2a-b2124904b441'),
 ('Virtual reality fitness platform', 89, NULL),
 ('Blockchain-based supply chain tracker', 234, NULL),
 ('Smart home energy optimization app', 67, NULL),
@@ -47,19 +47,19 @@ INSERT INTO "jobs" ("position", "overview", "responsibilities", "qualifications"
 
 -- 6. Products (depends on categories)
 INSERT INTO "products" ("name", "tagline", "description", "how_it_works", "icon", "url", "stats", "profile_id", "category_id") VALUES
-('TaskFlow', 'Streamline your workflow', 'A project management tool that helps teams collaborate effectively', 'Create projects, assign tasks, track progress in real-time', 'https://example.com/icon1.png', 'https://taskflow.com', '{"views": 1250, "reviews": 45}', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 1),
-('DesignHub', 'Design better, faster', 'All-in-one design platform for modern teams', 'Import designs, collaborate with team, export assets', 'https://example.com/icon2.png', 'https://designhub.com', '{"views": 890, "reviews": 32}', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 4),
-('CodeSync', 'Version control made simple', 'Git client with advanced features for developers', 'Connect repositories, manage branches, review code', 'https://example.com/icon3.png', 'https://codesync.com', '{"views": 2100, "reviews": 78}', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 3),
-('DataViz', 'Visualize your data', 'Create beautiful charts and dashboards', 'Connect data sources, choose templates, customize charts', 'https://example.com/icon4.png', 'https://dataviz.com', '{"views": 567, "reviews": 23}', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 5),
-('MobileFirst', 'Build mobile apps easily', 'No-code platform for mobile app development', 'Drag and drop interface, preview on device, publish to stores', 'https://example.com/icon5.png', 'https://mobilefirst.com', '{"views": 1450, "reviews": 56}', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 2);
+('TaskFlow', 'Streamline your workflow', 'A project management tool that helps teams collaborate effectively', 'Create projects, assign tasks, track progress in real-time', 'https://example.com/icon1.png', 'https://taskflow.com', '{"views": 1250, "reviews": 45}', '8354a3c8-d310-4dcf-8b2a-b2124904b441', 1),
+('DesignHub', 'Design better, faster', 'All-in-one design platform for modern teams', 'Import designs, collaborate with team, export assets', 'https://example.com/icon2.png', 'https://designhub.com', '{"views": 890, "reviews": 32}', '8354a3c8-d310-4dcf-8b2a-b2124904b441', 4),
+('CodeSync', 'Version control made simple', 'Git client with advanced features for developers', 'Connect repositories, manage branches, review code', 'https://example.com/icon3.png', 'https://codesync.com', '{"views": 2100, "reviews": 78}', '8354a3c8-d310-4dcf-8b2a-b2124904b441', 3),
+('DataViz', 'Visualize your data', 'Create beautiful charts and dashboards', 'Connect data sources, choose templates, customize charts', 'https://example.com/icon4.png', 'https://dataviz.com', '{"views": 567, "reviews": 23}', '8354a3c8-d310-4dcf-8b2a-b2124904b441', 5),
+('MobileFirst', 'Build mobile apps easily', 'No-code platform for mobile app development', 'Drag and drop interface, preview on device, publish to stores', 'https://example.com/icon5.png', 'https://mobilefirst.com', '{"views": 1450, "reviews": 56}', '8354a3c8-d310-4dcf-8b2a-b2124904b441', 2);
 
 -- 7. Reviews (depends on products)
 INSERT INTO "reviews" ("product_id", "profile_id", "rating", "review") VALUES
-(1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 5, 'Excellent project management tool! Very intuitive interface.'),
-(2, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 4, 'Great design platform, but could use more collaboration features.'),
-(3, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 5, 'Best Git client I have ever used. Highly recommended!'),
-(4, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 3, 'Good for basic charts, but advanced features are limited.'),
-(5, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 4, 'Perfect for rapid prototyping. Saves a lot of development time.');
+(1, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 5, 'Excellent project management tool! Very intuitive interface.'),
+(2, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 4, 'Great design platform, but could use more collaboration features.'),
+(3, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 5, 'Best Git client I have ever used. Highly recommended!'),
+(4, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 3, 'Good for basic charts, but advanced features are limited.'),
+(5, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 4, 'Perfect for rapid prototyping. Saves a lot of development time.');
 
 -- 8. Team (independent table)
 INSERT INTO "team" ("product_name", "team_size", "equity_split", "product_stage", "roles", "product_description") VALUES
@@ -78,36 +78,36 @@ INSERT INTO "message_rooms" ("created_at") VALUES
 (NOW());
 
 -- 10. Bridge tables (composite primary keys) - 1 row each
-INSERT INTO "post_upvotes" ("post_id", "profile_id") VALUES (1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+INSERT INTO "post_upvotes" ("post_id", "profile_id") VALUES (1, '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
-INSERT INTO "gpt_ideas_likes" ("gpt_idea_id", "profile_id") VALUES (1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+INSERT INTO "gpt_ideas_likes" ("gpt_idea_id", "profile_id") VALUES (1, '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
-INSERT INTO "product_upvotes" ("product_id", "profile_id") VALUES (1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+INSERT INTO "product_upvotes" ("product_id", "profile_id") VALUES (1, '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
-INSERT INTO "follows" ("follower_id", "following_id") VALUES ('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+INSERT INTO "follows" ("follower_id", "following_id") VALUES ('8354a3c8-d310-4dcf-8b2a-b2124904b441', '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
-INSERT INTO "message_room_members" ("message_room_id", "profile_id") VALUES (1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6');
+INSERT INTO "message_room_members" ("message_room_id", "profile_id") VALUES (1, '8354a3c8-d310-4dcf-8b2a-b2124904b441');
 
 -- 11. Messages (depends on message_rooms)
 INSERT INTO "messages" ("message_room_id", "sender_id", "content") VALUES
-(1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Hello! How are you doing?'),
-(2, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Great to meet you!'),
-(3, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Looking forward to collaborating'),
-(4, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Thanks for the opportunity'),
-(5, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Let us work together on this project');
+(1, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Hello! How are you doing?'),
+(2, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Great to meet you!'),
+(3, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Looking forward to collaborating'),
+(4, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Thanks for the opportunity'),
+(5, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Let us work together on this project');
 
 -- 12. Notifications (depends on products, posts)
 INSERT INTO "notifications" ("source_id", "product_id", "post_id", "target_id", "type") VALUES
-('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 1, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'review'),
-('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', NULL, 1, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'reply'),
-('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', NULL, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'follow'),
-('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 2, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'mention'),
-('1b44c9d2-060f-4121-ae4b-d78475fcb0e6', NULL, 2, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'reply');
+('8354a3c8-d310-4dcf-8b2a-b2124904b441', 1, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'review'),
+('8354a3c8-d310-4dcf-8b2a-b2124904b441', NULL, 1, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'reply'),
+('8354a3c8-d310-4dcf-8b2a-b2124904b441', NULL, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'follow'),
+('8354a3c8-d310-4dcf-8b2a-b2124904b441', 2, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'mention'),
+('8354a3c8-d310-4dcf-8b2a-b2124904b441', NULL, 2, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'reply');
 
 -- 13. Post Replies (depends on posts)
 INSERT INTO "post_replies" ("post_id", "parent_id", "profile_id", "reply") VALUES
-(1, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Great insights on SaaS development!'),
-(2, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Remote work is definitely the future.'),
-(3, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'AI is transforming everything around us.'),
-(4, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Continuous learning is key in tech.'),
-(5, NULL, '1b44c9d2-060f-4121-ae4b-d78475fcb0e6', 'Design principles are fundamental for good UX.'); 
+(1, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Great insights on SaaS development!'),
+(2, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Remote work is definitely the future.'),
+(3, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'AI is transforming everything around us.'),
+(4, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Continuous learning is key in tech.'),
+(5, NULL, '8354a3c8-d310-4dcf-8b2a-b2124904b441', 'Design principles are fundamental for good UX.'); 

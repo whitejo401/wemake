@@ -13,7 +13,7 @@ import {
 import { products } from "../products/schema";
 import { posts } from "../community/schema";
 
-export const users = pgTable("users", {
+export const users = pgSchema("auth").table("users", {
   id: uuid().primaryKey(),
 });
 

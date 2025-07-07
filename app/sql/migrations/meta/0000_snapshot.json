@@ -1,5 +1,5 @@
 {
-  "id": "422add70-26a4-4b1b-8836-b61430198072",
+  "id": "217b35fe-7f8a-4e08-8aba-0c7a40d025c0",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -204,6 +204,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "upvotes": {
+          "name": "upvotes",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 0
         },
         "created_at": {
           "name": "created_at",
@@ -1460,6 +1467,7 @@
           "name": "profiles_profile_id_users_id_fk",
           "tableFrom": "profiles",
           "tableTo": "users",
+          "schemaTo": "auth",
           "columnsFrom": [
             "profile_id"
           ],
@@ -1476,9 +1484,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.users": {
+    "auth.users": {
       "name": "users",
-      "schema": "",
+      "schema": "auth",
       "columns": {
         "id": {
           "name": "id",

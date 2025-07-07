@@ -16,7 +16,7 @@ import {
   AvatarImage,
 } from "~/common/components/ui/avatar";
 import { Badge } from "~/common/components/ui/badge";
-import { Reply } from "../components/reply";
+import { Reply } from "~/features/community/components/reply";
 
 export const meta: Route.MetaFunction = ({ params }) => {
   return [{ title: `${params.postId} | wemake` }];
