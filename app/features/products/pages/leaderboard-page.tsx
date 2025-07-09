@@ -3,6 +3,8 @@ import type { Route } from "./+types/leaderboard-page";
 import { Button } from "~/common/components/ui/button";
 import { ProductCard } from "../components/product-card";
 import { Link } from "react-router";
+import { DateTime } from "luxon";
+import { getProductsByDateRange } from 
 
 export const meta: Route.MetaFunction = () => {
   return [
@@ -11,6 +13,16 @@ export const meta: Route.MetaFunction = () => {
   ];
 };
 
+export const loader = async () => {
+  const [dailyProducts, weeklyProducts, monthlyProducts, yearlyProducts] =
+    await Promise.all([
+      getProductsByDateRange({
+        startDate: DateTime.now().startOf("day"),
+        endDate: DateTime.now().endOf("day"),
+        limit: 7,
+      }),
+    ]);
+}
 export default function LeaderboardPage() {
   return (
     <div className="space-y-20">
@@ -33,9 +45,9 @@ export default function LeaderboardPage() {
             id={`productId-${index}`}
             name="Product Name"
             description="Product Description"
-            commentsCount={12}
-            viewsCount={12}
-            votesCount={120}
+            reviewsCount="12"
+            viewsCount="12"
+            votesCount="120"
           />
         ))}
         <Button variant="link" asChild className="text-lg self-center">
