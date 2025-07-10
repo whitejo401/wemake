@@ -1,15 +1,16 @@
-import { Link, type MetaFunction } from "react-router";
+import type { Route } from "./+types/home-page";
+import { Link } from "react-router";
 import { ProductCard } from "~/features/products/components/product-card";
 import { Button } from "../components/ui/button";
 import { PostCard } from "~/features/community/components/post-card";
 import { IdeaCard } from "~/features/ideas/components/idea-card";
 import { JobCard } from "~/features/jobs/components/job-card";
 import { TeamCard } from "~/features/teams/components/team-card";
-import { getProductsByDateRange } from "~/features/products/quries";
+import { getProductsByDateRange } from "~/features/products/queries";
 import { DateTime } from "luxon";
-import type { Route } from "./+types/home-page";
+import { getPosts } from "~/features/community/queries";
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
   return [
     { title: "Home | wemake" },
     { name: "description", content: "Welcome to wemake" },
@@ -22,7 +23,11 @@ export const loader = async () => {
     endDate: DateTime.now().endOf("day"),
     limit: 7,
   });
-  return { products };
+  const posts = await getPosts({
+    limit: 7,
+    sorting: "newest",
+  });
+  return { products, posts };
 };
 
 export default function HomePage({ loaderData }: Route.ComponentProps) {
@@ -64,15 +69,16 @@ export default function HomePage({ loaderData }: Route.ComponentProps) {
             <Link to="/community">Explore all discussions &rarr;</Link>
           </Button>
         </div>
-        {Array.from({ length: 11 }).map((_, index) => (
+        {loaderData.posts.map((post) => (
           <PostCard
-            key={`postId-${index}`}
-            id={index}
-            title="What is the best productivity tool?"
-            author="Nico"
-            authorAvatarUrl="https://github.com/apple.png"
-            category="Productivity"
-            postedAt="12 hours ago"
+            key={post.post_id}
+            id={post.post_id}
+            title={post.title}
+            author={post.author}
+            authorAvatarUrl={post.author_avatar}
+            category={post.topic}
+            postedAt={post.created_at}
+            votesCount={post.upvotes}
           />
         ))}
       </div>

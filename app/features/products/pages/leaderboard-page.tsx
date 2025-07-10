@@ -3,7 +3,7 @@ import type { Route } from "./+types/leaderboard-page";
 import { Button } from "~/common/components/ui/button";
 import { ProductCard } from "../components/product-card";
 import { Link } from "react-router";
-import { getProductsByDateRange } from "../quries";
+import { getProductsByDateRange } from "../queries";
 import { DateTime } from "luxon";
 
 export const meta: Route.MetaFunction = () => {

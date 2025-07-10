@@ -6,7 +6,7 @@ import { Hero } from "~/common/components/hero";
 import { ProductCard } from "../components/product-card";
 import { Button } from "~/common/components/ui/button";
 import ProductPagination from "~/common/components/product-pagination";
-import { getProductPagesByDateRange, getProductsByDateRange } from "../quries";
+import { getProductPagesByDateRange, getProductsByDateRange } from "../queries";
 
 const paramsSchema = z.object({
   year: z.coerce.number(),
