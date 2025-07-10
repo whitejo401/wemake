@@ -21,9 +21,18 @@ type Database = MergeDeep<
   }
 >;
 
+// 권한 문제 해결을 위한 옵션:
+// 1. 익명 키 사용 (현재 - RLS 정책 필요)
 const client = createClient<Database>(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_ANON_KEY!
 );
+
+
+// 2. 서비스 키 사용 (RLS 무시됨)
+// const client = createClient<Database>(
+//   process.env.SUPABASE_URL!,
+//   process.env.SUPABASE_SERVICE_ROLE_KEY!
+// );
 
 export default client;

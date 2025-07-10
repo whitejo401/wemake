@@ -94,7 +94,7 @@ CREATE TABLE "products" (
 	"how_it_works" text NOT NULL,
 	"icon" text NOT NULL,
 	"url" text NOT NULL,
-	"stats" jsonb DEFAULT '{"views":0,"reviews":0}'::jsonb NOT NULL,
+	"stats" jsonb DEFAULT '{"views":0,"reviews":0,"upvotes":0}'::jsonb NOT NULL,
 	"profile_id" uuid NOT NULL,
 	"category_id" bigint,
 	"created_at" timestamp DEFAULT now() NOT NULL,
@@ -176,10 +176,7 @@ CREATE TABLE "profiles" (
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
---> statement-breakpoint
-CREATE TABLE "auth"."users" (
-	"id" uuid PRIMARY KEY NOT NULL
-);
+
 --> statement-breakpoint
 ALTER TABLE "post_replies" ADD CONSTRAINT "post_replies_post_id_posts_post_id_fk" FOREIGN KEY ("post_id") REFERENCES "public"."posts"("post_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "post_replies" ADD CONSTRAINT "post_replies_parent_id_post_replies_post_reply_id_fk" FOREIGN KEY ("parent_id") REFERENCES "public"."post_replies"("post_reply_id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint

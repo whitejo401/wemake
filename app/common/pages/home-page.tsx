@@ -5,6 +5,9 @@ import { PostCard } from "~/features/community/components/post-card";
 import { IdeaCard } from "~/features/ideas/components/idea-card";
 import { JobCard } from "~/features/jobs/components/job-card";
 import { TeamCard } from "~/features/teams/components/team-card";
+import { getProductsByDateRange } from "~/features/products/quries";
+import { DateTime } from "luxon";
+import type { Route } from "./+types/home-page";
 
 export const meta: MetaFunction = () => {
   return [
@@ -22,7 +25,7 @@ export const loader = async () => {
   return { products };
 };
 
-export default function HomePage({loaderData}: Route.ComponentProps) {
+export default function HomePage({ loaderData }: Route.ComponentProps) {
   return (
     <div className="space-y-40">
       <div className="grid grid-cols-3 gap-4">
@@ -37,10 +40,10 @@ export default function HomePage({loaderData}: Route.ComponentProps) {
             <Link to="/products/leaderboards">Explore all products &rarr;</Link>
           </Button>
         </div>
-        {loaderData.products.map((product) => (
+        {loaderData.products.map((product, index) => (
           <ProductCard
-            key={product.id}
-            id={product.id.toString()}
+            key={product.product_id}
+            id={product.product_id.toString()}
             name={product.name}
             description={product.description}
             reviewsCount={product.reviews}

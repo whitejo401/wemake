@@ -1,5 +1,5 @@
 {
-  "id": "217b35fe-7f8a-4e08-8aba-0c7a40d025c0",
+  "id": "fcb51a66-f8fe-4b4d-ab3e-fdd2d626d3f8",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -762,7 +762,7 @@
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
-          "default": "'{\"views\":0,\"reviews\":0}'::jsonb"
+          "default": "'{\"views\":0,\"reviews\":0,\"upvotes\":0}'::jsonb"
         },
         "profile_id": {
           "name": "profile_id",
