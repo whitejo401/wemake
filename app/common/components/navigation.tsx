@@ -279,5 +279,4 @@ export default function Navigation({
       )}
     </nav>
   );
-
 }

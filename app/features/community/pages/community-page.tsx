@@ -102,8 +102,8 @@ export default function CommunityPage({ loaderData }: Route.ComponentProps) {
               </Form>
             </div>
             <Button asChild>
-              <Link to={`/community/submit`}>Create Discussion</Link>
-            </Button>
+              <Link to={`/community/create`}>Create Discussion</Link>
+            </Button>     
           </div>
           <div className="space-y-5">
             {loaderData.posts.map((post) => (
