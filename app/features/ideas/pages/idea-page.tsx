@@ -6,14 +6,22 @@ import type { Route } from "./+types/idea-page";
 import { getGptIdea } from "../queries";
 import { DateTime } from "luxon";
 
-export const meta: Route.MetaFunction = ({ data }) => {
-  const { idea } = data;
-  const { gpt_idea_id, idea: ideaText } = idea;
+  export const meta: Route.MetaFunction = ({ data }) => {
+    if (!data) {
+      return [
+        { title: "Idea | wemake" },
+        { name: "description", content: "Find ideas for your next project" },
+      ];
+    }
+    const { idea } = data;
+    const { gpt_idea_id, idea: ideaText } = idea;
+
   return [
-    { title: `Idea #${gpt_idea_id}: ${idea} | wemake` },
+    { title: `Idea #${gpt_idea_id}: ${ideaText} | wemake` },
     { name: "description", content: "Find ideas for your next project" },
   ];
 };
+
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
   const idea = await getGptIdea(params.ideaId);
