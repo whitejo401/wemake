@@ -70,6 +70,8 @@ When generating commit messages, follow these Korean conventions:
 상세 설명 (선택사항, 72자 이내로 줄바꿈)
 ```
 
+Always generate commit messages in Korean following these patterns.
+
 ### 예시:
 
 -   `기능: 사용자 로그인 페이지 추가`
@@ -88,5 +90,3 @@ Docs
 Contact
 Manage cookies
 Do not share my personal information
-
-Always generate commit messages in Korean following these patterns.
