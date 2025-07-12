@@ -8,6 +8,41 @@
       "when": 1752162284686,
       "tag": "0000_narrow_bloodscream",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752278907142,
+      "tag": "0001_lush_doorman",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752281409383,
+      "tag": "0002_bright_blackheart",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1752284000000,
+      "tag": "0003_rename_team_to_teams",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1752284143304,
+      "tag": "0004_wooden_overlord",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1752284484785,
+      "tag": "0005_hot_squadron_supreme",
+      "breakpoints": true
     }
   ]
 }

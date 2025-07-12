@@ -674,7 +674,7 @@ export type Database = {
           },
         ]
       }
-      team: {
+      teams: {
         Row: {
           created_at: string
           equity_split: number
@@ -683,6 +683,7 @@ export type Database = {
           product_stage: Database["public"]["Enums"]["product_stage"]
           roles: string
           team_id: number
+          team_leader_id: string
           team_size: number
           updated_at: string
         }
@@ -694,6 +695,7 @@ export type Database = {
           product_stage: Database["public"]["Enums"]["product_stage"]
           roles: string
           team_id?: never
+          team_leader_id: string
           team_size: number
           updated_at?: string
         }
@@ -705,10 +707,19 @@ export type Database = {
           product_stage?: Database["public"]["Enums"]["product_stage"]
           roles?: string
           team_id?: never
+          team_leader_id?: string
           team_size?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "team_team_leader_id_profiles_profile_id_fk"
+            columns: ["team_leader_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["profile_id"]
+          },
+        ]
       }
       topics: {
         Row: {
@@ -763,7 +774,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      job_type: "full-time" | "part-time" | "remote"
+      job_type: "full-time" | "part-time" | "freelance" | "internship"
       location: "remote" | "in-person" | "hybrid"
       notification_type: "follow" | "review" | "reply" | "mention"
       product_stage: "idea" | "prototype" | "mvp" | "product"
@@ -908,7 +919,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      job_type: ["full-time", "part-time", "remote"],
+      job_type: ["full-time", "part-time", "freelance", "internship"],
       location: ["remote", "in-person", "hybrid"],
       notification_type: ["follow", "review", "reply", "mention"],
       product_stage: ["idea", "prototype", "mvp", "product"],

@@ -1,14 +1,16 @@
 import {
     bigint,
     check,
-    integer,
+    integer,    
     pgEnum,
     pgTable,
     text,
     timestamp,
+    uuid,
   } from "drizzle-orm/pg-core";
   import { PRODUCT_STAGES } from "./constants";
   import { sql } from "drizzle-orm";
+  import { profiles } from "../users/schema";
   
   export const productStage = pgEnum(
     "product_stage",
@@ -16,8 +18,8 @@ import {
   );
   
   export const team = pgTable(
-    "team",
-    {
+  "teams",
+  {
       team_id: bigint({ mode: "number" })
         .primaryKey()
         .generatedAlwaysAsIdentity(),
@@ -27,6 +29,10 @@ import {
       product_stage: productStage().notNull(),
       roles: text().notNull(),
       product_description: text().notNull(),
+      team_leader_id: uuid()
+        .references(() => profiles.profile_id, {
+        onDelete: "cascade",
+      }).notNull(),
       created_at: timestamp().notNull().defaultNow(),
       updated_at: timestamp().notNull().defaultNow(),
     },
