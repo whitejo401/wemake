@@ -8,6 +8,11 @@ import {
 } from "~/common/components/ui/sidebar";
 import MessageRoomCard from "../components/message-room-card";
 
+
+export const meta: Route.MetaFunction = ({ data }) => {
+  return [{ title: `${data.user.name} | wemake` }];
+};
+
 export default function MessagesLayout() {
   return (
     <SidebarProvider className="flex max-h-[calc(100vh-14rem)] overflow-hidden h-[calc(100vh-14rem)] min-h-full">
