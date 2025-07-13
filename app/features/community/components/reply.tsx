@@ -39,7 +39,7 @@ export function Reply({
   const [replying, setReplying] = useState(false);
   const toggleReplying = () => setReplying((prev) => !prev);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       <div className="flex items-start gap-5 w-2/3">
         <Avatar className="size-14">
           <AvatarFallback>{username[0]}</AvatarFallback>
@@ -78,15 +78,17 @@ export function Reply({
           </div>
         </Form>
       )}
-      {topLevel && (
+      {topLevel && replies && (
         <div className="pl-20 w-full">
-          <Reply
-            username="Nicolas"
-            avatarUrl="https://github.com/serranoarevalo.png"
-            content="I've been using Todoist for a while now, and it's really great. It's simple, easy to use, and has a lot of features."
-            timestamp="12 hours ago"
-            topLevel={false}
-          />
+          {replies.map((reply) => (
+            <Reply
+              username={reply.user.name}
+              avatarUrl={reply.user.avatar}
+              content={reply.reply}
+              timestamp={reply.created_at}
+              topLevel={false}
+            />
+          ))}
         </div>
       )}
     </div>
