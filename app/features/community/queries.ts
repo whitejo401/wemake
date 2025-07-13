@@ -100,12 +100,38 @@ export const getPosts = async ({
   return data;
 };
 
-export const getPostDetail = async (postId: string) => {
+export const getPostById = async (postId: string) => {
   const { data, error } = await client
     .from("community_post_detail")
     .select("*")
     .eq("post_id", postId)
     .single();
-  if (error) throw new Error(error.message);
+  if (error) throw error;
+  return data;
+};
+
+export const getReplies = async (postId: string) => {
+  const replyQuery = `
+    post_reply_id,
+    reply,
+    created_at,
+    user:profiles (
+      name,
+      avatar,
+      username
+    )
+  `;
+  const { data, error } = await client
+    .from("post_replies")
+    .select(
+      `
+      ${replyQuery},
+      post_replies (
+        ${replyQuery}
+      )
+      `
+    )
+    .eq("post_id", postId);
+  if (error) throw error;
   return data;
 };
