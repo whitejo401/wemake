@@ -2,9 +2,15 @@ import { Button } from "~/common/components/ui/button";
 import type { Route } from "./+types/otp-start-page";
 import { Form } from "react-router";
 import InputPair from "~/common/components/input-pair";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Start OTP | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function OtpStartPage() {

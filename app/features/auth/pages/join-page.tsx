@@ -3,9 +3,15 @@ import { Form, Link } from "react-router";
 import type { Route } from "./+types/join-page";
 import InputPair from "~/common/components/input-pair";
 import AuthButtons from "../components/auth-buttons";
+import { makeSSRClient } from "~/supa-client";
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Join | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function JoinPage() {

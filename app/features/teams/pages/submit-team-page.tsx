@@ -5,10 +5,16 @@ import { Button } from "~/common/components/ui/button";
 import InputPair from "~/common/components/input-pair";
 import SelectPair from "~/common/components/select-pair";
 import { PRODUCT_STAGES } from "../constants";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => [
   { title: "Create Team | wemake" },
 ];
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
+};
 
 export default function SubmitTeamPage() {
   return (

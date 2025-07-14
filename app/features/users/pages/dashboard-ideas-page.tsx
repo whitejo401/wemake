@@ -1,8 +1,14 @@
 import { IdeaCard } from "~/features/ideas/components/idea-card";
 import type { Route } from "./+types/dashboard-ideas-page";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "My Ideas | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function DashboardIdeasPage() {

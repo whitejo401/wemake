@@ -1,11 +1,17 @@
 import type { Route } from "../../../../+types/features/auth/pages/social-complete-page";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export function meta(): Route.MetaFunction {
   return [
     { title: "Complete Social Authentication" },
     { name: "description", content: "Complete social authentication process" },
   ];
 }
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
+};
 
 export default function SocialCompletePage({ loaderData, actionData }: Route.ComponentProps) {
   return (

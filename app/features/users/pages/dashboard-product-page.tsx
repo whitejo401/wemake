@@ -12,9 +12,15 @@ import {
   ChartTooltipContent,
 } from "~/common/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Product Dashboard | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 const chartData = [

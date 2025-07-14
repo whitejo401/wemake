@@ -1,8 +1,13 @@
-import { createClient } from "@supabase/supabase-js";
+import {
+  createBrowserClient,
+  createServerClient,
+  parseCookieHeader,
+  serializeCookieHeader,
+} from "@supabase/ssr";
 import type { MergeDeep, SetNonNullable, SetFieldType } from "type-fest";
 import type { Database as SupabaseDatabase } from "database.types";
 
-type Database = MergeDeep<
+export type Database = MergeDeep<
   SupabaseDatabase,
   {
     public: {
@@ -21,14 +26,14 @@ type Database = MergeDeep<
             SupabaseDatabase["public"]["Views"]["product_overview_view"]["Row"]
           >;
         };
-        gpt_ideas_view: {
-          Row: SetNonNullable<
-            SupabaseDatabase["public"]["Views"]["gpt_ideas_view"]["Row"]
-          >;
-        };
         community_post_detail: {
           Row: SetNonNullable<
             SupabaseDatabase["public"]["Views"]["community_post_detail"]["Row"]
+          >;
+        };
+        gpt_ideas_view: {
+          Row: SetNonNullable<
+            SupabaseDatabase["public"]["Views"]["gpt_ideas_view"]["Row"]
           >;
         };
       };
@@ -36,18 +41,35 @@ type Database = MergeDeep<
   }
 >;
 
-// 권한 문제 해결을 위한 옵션:
-// 1. 익명 키 사용 (현재 - RLS 정책 필요)
-const client = createClient<Database>(
+export const browserClient = createBrowserClient<Database>(
   process.env.SUPABASE_URL!,
   process.env.SUPABASE_ANON_KEY!
 );
 
+export const makeSSRClient = (request: Request) => {
+  const headers = new Headers();
+  const serverSideClient = createServerClient<Database>(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return parseCookieHeader(request.headers.get("Cookie") ?? "");
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            headers.append(
+              "Set-Cookie",
+              serializeCookieHeader(name, value, options)
+            );
+          });
+        },
+      },
+    }
+  );
 
-// 2. 서비스 키 사용 (RLS 무시됨)
-// const client = createClient<Database>(
-//   process.env.SUPABASE_URL!,
-//   process.env.SUPABASE_SERVICE_ROLE_KEY!
-// );
-
-export default client;
+  return {
+    client: serverSideClient,
+    headers,
+  };
+};

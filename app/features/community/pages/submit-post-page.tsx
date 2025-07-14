@@ -4,9 +4,15 @@ import { Form } from "react-router";
 import InputPair from "~/common/components/input-pair";
 import SelectPair from "~/common/components/select-pair";
 import { Button } from "~/common/components/ui/button";
+import { makeSSRClient } from "~/supa-client";
 
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Submit Post | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function SubmitPostPage() {

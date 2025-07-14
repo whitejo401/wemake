@@ -2,9 +2,15 @@ import type { Route } from "./+types/otp-complete-page";
 import { Form } from "react-router";
 import InputPair from "~/common/components/input-pair";
 import { Button } from "~/common/components/ui/button";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Verify OTP | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function OtpPage() {

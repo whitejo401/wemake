@@ -9,12 +9,18 @@ import { Label } from "~/common/components/ui/label";
 import type { DateRange } from "react-day-picker";
 import { DateTime } from "luxon";
 import { Button } from "~/common/components/ui/button";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [
     { title: "Promote Product | ProductHunt Clone" },
     { name: "description", content: "Promote your product" },
   ];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function PromotePage() {

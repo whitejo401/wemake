@@ -6,9 +6,15 @@ import { useState } from "react";
 import { Label } from "~/common/components/ui/label";
 import { Input } from "~/common/components/ui/input";
 import { Button } from "~/common/components/ui/button";
-
+import { makeSSRClient } from "~/supa-client";
+    
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Settings | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function SettingsPage() {

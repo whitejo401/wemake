@@ -15,9 +15,15 @@ import { Textarea } from "~/common/components/ui/textarea";
 import { Button } from "~/common/components/ui/button";
 import { SendIcon } from "lucide-react";
 import { MessageBubble } from "../components/message-bubble";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Message | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function MessagePage() {

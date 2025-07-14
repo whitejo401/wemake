@@ -1,8 +1,14 @@
 import type { Route } from "./+types/notifications-page";
 import { NotificationCard } from "../components/notification-card";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Notifications | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function NotificationsPage() {

@@ -5,7 +5,8 @@ import InputPair from "~/common/components/input-pair";
 import SelectPair from "~/common/components/select-pair";
 import { JOB_TYPES, LOCATION_TYPES, SALARY_RANGE } from "../constants";
 import { Button } from "~/common/components/ui/button";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [
     { title: "Post a Job | wemake" },
@@ -14,6 +15,11 @@ export const meta: Route.MetaFunction = () => {
       content: "Reach out to the best developers in the world",
     },
   ];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function SubmitJobPage() {

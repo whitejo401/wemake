@@ -10,9 +10,15 @@ import {
 import type { Route } from "./+types/dashboard-page";
 import { ChartContainer } from "~/common/components/ui/chart";
 import { CartesianGrid, LineChart, XAxis } from "recharts";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [{ title: "Dashboard | wemake" }];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 const chartData = [

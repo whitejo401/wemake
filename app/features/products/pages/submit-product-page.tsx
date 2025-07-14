@@ -1,10 +1,13 @@
 import type { Route } from "./+types/submit-product-page";
+import { makeSSRClient } from "~/supa-client";
 
 export function loader({ request }: Route.LoaderArgs) {
+  const {client, headers} = makeSSRClient(request);
   return {};
 }
 
 export function action({ request }: Route.ActionArgs) {
+  const {client, headers} = makeSSRClient(request);
   return {};
 }
 

@@ -18,4 +18,4 @@ export function loader({ params }: Route.LoaderArgs) {
     return data(null, { status: 400 });
   }
   return redirect(url);
-}
+} 

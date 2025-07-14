@@ -1,11 +1,17 @@
 import type { Route } from "./+types/social-start-page";
-
+import { makeSSRClient } from "~/supa-client";
+  
 export const meta: Route.MetaFunction = () => {
   return [
     { title: "Social Authentication" },
     { name: "description", content: "Start social authentication process" },
   ];
 }
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
+};
 
 export default function SocialStartPage({ loaderData, actionData }: Route.ComponentProps) {
   return (

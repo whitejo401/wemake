@@ -7,12 +7,18 @@ import { Input } from "~/common/components/ui/input";
 import { Label } from "~/common/components/ui/label";
 import { useState } from "react";
 import { Button } from "~/common/components/ui/button";
+import { makeSSRClient } from "~/supa-client";
 
 export const meta: Route.MetaFunction = () => {
   return [
     { title: "Submit Product | wemake" },
     { name: "description", content: "Submit your product" },
   ];
+};
+
+export const loader = async ({request}: Route.LoaderArgs) => {
+  const {client, headers} = makeSSRClient(request);
+  return null;
 };
 
 export default function SubmitPage() {
