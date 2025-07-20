@@ -1,32 +1,34 @@
-import type { Route } from "./+types/social-start-page";
+import { redirect } from "react-router";
+import { z } from "zod";
+
 import { makeSSRClient } from "~/supa-client";
-  
-export const meta: Route.MetaFunction = () => {
-  return [
-    { title: "Social Authentication" },
-    { name: "description", content: "Start social authentication process" },
-  ];
-}
+import type { Route } from "./+types/social-start-page";
 
-export const loader = async ({request}: Route.LoaderArgs) => {
-  const {client, headers} = makeSSRClient(request);
-  return null;
+const paramsSchema = z.object({
+  provider: z.enum(["github", "kakao"]),
+});
+
+export const loader = async ({ params, request }: Route.LoaderArgs) => {
+  const { success, data } = paramsSchema.safeParse(params);
+  if (!success) {
+    return redirect("/auth/login");
+  }
+  const { provider } = data;
+  const redirectTo = `http://localhost:5173/auth/social/${provider}/complete`;
+  const { client, headers } = makeSSRClient(request);
+  const {
+    data: { url },
+    error,
+  } = await client.auth.signInWithOAuth({
+    provider,
+    options: {
+      redirectTo,
+    },
+  });
+  if (url) {
+    return redirect(url, { headers });
+  }
+  if (error) {
+    throw error;
+  }
 };
-
-export default function SocialStartPage({ loaderData, actionData }: Route.ComponentProps) {
-  return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in with {loaderData?.provider || "social provider"}
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Redirecting to {loaderData?.provider || "social provider"} for authentication...
-        </p>
-      </div>
-      <div className="flex justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-      </div>
-    </div>
-  );
-} 
